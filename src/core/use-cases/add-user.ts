@@ -1,16 +1,16 @@
-import { User } from "../domain/user";
-import { UserData } from "../../interfaces/user";
+import { JsonUserRepository } from "@/repository/user";
+import { User } from "@/core/domain/user";
 
-export function AddUser(userData: UserData): User {
-    if(userData.username === ""){
-        throw new Error("username is required");
-    }
+export class AddUser {
+  constructor(private repo: JsonUserRepository) {}
 
-    if(userData.password === ""){
-        throw new Error("password is required");
-    }
+  execute(userData: User) {
+    if (!userData.credentials.username) throw new Error("username is required");
+    if (!userData.credentials.password) throw new Error("password is required");
 
-    const user = new User();
-    user.credentials = userData;
-    return user;
-} 
+    const existingUsers = this.repo.GetUserByNameFromDB(userData.credentials.username);
+    if (existingUsers.length > 0) throw new Error("username already exists");
+
+    return { user: this.repo.SaveUserToDB(userData) };
+  }
+}

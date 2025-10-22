@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { SaveUserToDB, GetUserFromDB } from "@/repository/user";
+import { CreateNewUser } from "@/services/user";
 import { User } from "@/core/domain/user";
 
-export async function GET() {
-    const users = GetUserFromDB();
-    return NextResponse.json(users);
-}
+// export async function GET() {
+//     const users = GetUserFromDB();
+//     return NextResponse.json(users);
+// }
 
 export async function POST(request: Request) {
     const body = await request.json();
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         password: body.password
     }
     try {
-        const savedUser = SaveUserToDB(newUser.credentials);
+        const savedUser = await CreateNewUser(newUser.credentials);
         return NextResponse.json(savedUser);
     } catch(e: any) {
         return NextResponse.json({

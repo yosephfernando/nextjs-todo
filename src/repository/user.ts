@@ -1,17 +1,16 @@
-import { UserData } from "@/interfaces/user";
-import { LocalJsonDB } from "@/plugins/local-json-db";
-import { User } from "@/core/domain/user";
-import { AddUser } from "@/core/use-cases/add-user";
+import { LocalJsonDB } from "../plugins/local-json-db";
+import { User } from "../core/domain/user";
+import { UserRepository } from "../interfaces/user-repository";
 
 const db = new LocalJsonDB<User>("users");
 
-export function SaveUserToDB(userData: UserData){
-    const addUser = AddUser(userData)
-    db.add(addUser);
-    return addUser;
-}
+export class JsonUserRepository implements UserRepository {
+    SaveUserToDB(user: User) {
+        db.add(user);
+        return user;
+    }
 
-export function GetUserFromDB(){
-    const users = db.getAll();
-    return users;
+    GetUserByNameFromDB(username: string): User[] {
+        return db.getBy("username", username);
+    }
 }

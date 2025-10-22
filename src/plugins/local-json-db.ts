@@ -18,6 +18,10 @@ export class LocalJsonDB<T extends object> {
     return this.data;
   }
 
+  getBy<K extends keyof T>(key: K, value: T[K]): T[] {
+    return this.data.filter((item) => item[key] === value);
+  }
+
   add(item: T): void {
     this.data.push(item);
     fs.writeFileSync(this.dbPath, JSON.stringify(this.data, null, 2));

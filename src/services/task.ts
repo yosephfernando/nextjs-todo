@@ -11,7 +11,7 @@ export async function CreateNewTask(taskData: TaskData) {
     const useCase = new AddTask(repo);
   
     const now = new Date().toISOString();
-    const task = new Task(taskData);
+    const task = Task.create(taskData);
     task.status = task.status || "TO_DO";
     task.createdAt = now;
     task.updatedAt = now;
