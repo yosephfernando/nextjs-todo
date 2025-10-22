@@ -1,17 +1,33 @@
 import { TaskData } from "@/interfaces/task";
-import { LocalJsonDB } from "@/plugins/local-json-db";
-import { Task } from "@/core/domain/task";
+import { JsonTaskRepository } from "@/repository/task";
 import { AddTask } from "@/core/use-cases/add-task";
+import { GetTask } from "@/core/use-cases/get-task";
+import { RemoveTask } from "@/core/use-cases/remove-task";
+import { Task } from "@/core/domain/task";
 
-const db = new LocalJsonDB<Task>("task");
+const repo = new JsonTaskRepository();
 
-export function SaveTaskToDB(taskData: TaskData){
-    const addTask = AddTask(taskData)
-    db.add(addTask);
-    return addTask;
+export async function CreateNewTask(taskData: TaskData) {
+    const useCase = new AddTask(repo);
+  
+    const now = new Date().toISOString();
+    const task = new Task(taskData);
+    task.status = task.status || "TO_DO";
+    task.createdAt = now;
+    task.updatedAt = now;
+  
+    const result = await useCase.execute(task);
+    return result.task;
 }
 
-export function GetTaskFromDB(){
-    const task = db.getAll();
-    return task;
+export function FetchAllTasks() {
+    const tasks = new GetTask(repo).execute().task;
+    return tasks;
+}
+
+export function DeleteTask(taskData: TaskData) {
+    const task = new Task(taskData);
+    const useCase = new RemoveTask(repo);
+    useCase.execute(task);
+    return;
 }

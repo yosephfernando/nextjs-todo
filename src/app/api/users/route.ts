@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { SaveUserToDB, GetUserFromDB } from "@/services/user";
+import { SaveUserToDB, GetUserFromDB } from "@/repository/user";
 import { User } from "@/core/domain/user";
 
 export async function GET() {

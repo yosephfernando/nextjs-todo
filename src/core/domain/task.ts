@@ -1,33 +1,50 @@
-
-import { TaskData } from "@/interfaces/task"
+import { TaskData } from "@/interfaces/task";
 
 export class Task {
-    constructor (
-        private title: string = "",
-        private description: string = "",
-        private status: "TO_DO" | "IN_PROGRESS" | "DONE" = "TO_DO",
-        private username: string = "",
-        private createdAt: string = "",
-        private updatedAt: string = ""
-    ) {}
+  public title: string;
+  public description: string;
+  public status: "TO_DO" | "IN_PROGRESS" | "DONE";
+  public username: string;
+  public createdAt: string;
+  public updatedAt: string;
 
-    get task(): TaskData {
-        return {
-            title: this.title,
-            description: this.description,
-            status: this.status,
-            username: this.username,
-            createdAt: this.createdAt,
-            updatedAt: this.updatedAt,
-        };
-    }
+  constructor(data: TaskData) {
+    this.title = data.title;
+    this.description = data.description;
+    this.status = data.status ?? "TO_DO";
+    this.username = data.username ?? "";
+    this.createdAt = data.createdAt ?? new Date().toISOString();
+    this.updatedAt = data.updatedAt ?? new Date().toISOString();
+  }
 
-    set task(data: TaskData) {
-       this.title = data.title;
-       this.description = data.description;
-       this.createdAt = data.createdAt ?? this.createdAt;
-       this.updatedAt = data.updatedAt ?? this.updatedAt;
-       this.status = data.status ?? this.status;
-       this.username = data.username ?? this.username;
-    }
+  static create(data: Omit<TaskData, "createdAt" | "updatedAt">): Task {
+    return new Task({
+      ...data,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+  }
+
+  get task(): TaskData {
+    return {
+      title: this.title,
+      description: this.description,
+      status: this.status,
+      username: this.username,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
+  update(data: Partial<TaskData>) {
+    if (data.title) this.title = data.title;
+    if (data.description) this.description = data.description;
+    if (data.status) this.status = data.status;
+    if (data.username) this.username = data.username;
+    this.updatedAt = new Date().toISOString();
+  }
+
+  equals(other: Task): boolean {
+    return this.title === other.task.title && this.username === other.task.username;
+  }
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { AddUser } from './add-user';
+import { AddUser } from '../add-user';
 
 describe("AddUser", () => {
     it('Should create new user with username and password as param', () => {

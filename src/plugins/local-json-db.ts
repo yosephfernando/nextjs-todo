@@ -23,6 +23,16 @@ export class LocalJsonDB<T extends object> {
     fs.writeFileSync(this.dbPath, JSON.stringify(this.data, null, 2));
   }
 
+  delete(item: T): void {
+    const index = this.data.findIndex((d) => JSON.stringify(d) === JSON.stringify(item));
+    if (index === -1) {
+      throw new Error("Item not found");
+    }
+  
+    this.data.splice(index, 1);
+    fs.writeFileSync(this.dbPath, JSON.stringify(this.data, null, 2));
+  }  
+
   clear(): void {
     this.data = [];
     fs.writeFileSync(this.dbPath, "[]");

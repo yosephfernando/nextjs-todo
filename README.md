@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Features ##
+1. Login / Register user
+2. Create new task
+3. Update status task
+4. Delete task
 
-## Getting Started
+## Diagram ##
+```mermaid
+flowchart TD
 
-First, run the development server:
+    subgraph Core
+        subgraph Domain
+            A["Task Entity"]
+        end
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+        subgraph UseCase
+            B["AddTask Use Case"]
+            C["GetTask Use Case"]
+            D["UpdateTask Use Case"]
+            E["DeleteTask Use Case"]
+        end
+    end
+
+    subgraph Repository
+        F["JsonTaskRepository"]
+    end
+
+    subgraph Service
+        G["TaskService (CreateNewTask, FetchAllTasks, etc.)"]
+    end
+
+    subgraph API_Frontend
+        H["Next.js API Route (app/api/tasks)"]
+        I["React Component or Page"]
+    end
+
+    I --> H
+    H --> G
+    G --> B
+    G --> C
+    G --> D
+    G --> E
+    B --> F
+    C --> F
+    D --> F
+    E --> F
+    B --> A
+    C --> A
+    D --> A
+    E --> A
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run in local ##
+### 1. Clone the repository ###
+`git clone https://github.com/yosephfernando/nextjs-todo.git`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Navigate into the project folder ###
+`cd nextjs-todo`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Install dependencies ###
+`npm install`
 
-## Learn More
+### 4. Start the development server ###
+`npm run dev`
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Run test ##
+`npm test`
