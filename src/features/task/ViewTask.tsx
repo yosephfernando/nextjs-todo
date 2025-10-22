@@ -10,6 +10,7 @@ interface ViewTaskProps {
 const ViewTask: FC<ViewTaskProps> = ({ taskData, deleteTask }) => {
     return (
       <div className="flex flex-col w-full p-4 border rounded shadow-md">
+        <h2 className="text-xl font-bold mb-2">Task Details</h2>
         <p>{taskData?.title}</p>
         <p>
           {taskData?.description}

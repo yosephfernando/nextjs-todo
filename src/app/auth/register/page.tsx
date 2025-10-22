@@ -4,7 +4,7 @@ import FormRegister from "@/features/users/FormRegister";
 import { useUser } from "@/features/users/hooks/UseUser";
 
 export default function Register(){
-    const { users, refresh, loading, saved, error, newUser } = useUser();
+    const { loading, saved, error, newUser } = useUser();
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
             <div className="w-full max-w-sm p-6 bg-white dark:bg-gray-800 rounded shadow-md">

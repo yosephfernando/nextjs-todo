@@ -1,8 +1,35 @@
-export default function FormLogin() {
+"use client";
+
+import { FC } from "react";
+import { UserData } from "@/interfaces/user";
+import { User } from "@/core/domain/user";
+
+interface FormLoginPropsType {
+    authUser: (user: UserData) => void;
+}
+
+const FormLogin: FC<FormLoginPropsType> = ({ authUser }) => {
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const username = formData.get("username") as string;
+        const password = formData.get("password") as string;
+
+        if (!username || !password) {
+            alert("Username and password are required.");
+            return;
+        }
+
+        const user = new User();
+        user.credentials = { username, password };
+
+        authUser(user.credentials);
+    }
+
     return (
         <>
             <h2 className="mb-6 text-2xl font-bold text-center">Login</h2>
-            <form>
+            <form  onSubmit={(e) => onSubmit(e)}>
                 <div className="mb-4">
                     <label htmlFor="username" className="block mb-2 text-sm font-medium">
                         Username
@@ -10,6 +37,7 @@ export default function FormLogin() {
                     <input
                         type="text"
                         id="username"
+                        name="username"
                         className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter your username"
                     />
@@ -21,6 +49,7 @@ export default function FormLogin() {
                     <input
                         type="password"
                         id="password"
+                        name="password"
                         className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter your password"
                     />
@@ -38,3 +67,5 @@ export default function FormLogin() {
         </>
     );
 }
+
+export default FormLogin;

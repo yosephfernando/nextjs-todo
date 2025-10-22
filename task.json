@@ -1,13 +1,5 @@
 [
   {
-    "title": "task 4",
-    "description": "task 4 desc",
-    "status": "TO_DO",
-    "username": "",
-    "createdAt": "",
-    "updatedAt": ""
-  },
-  {
     "title": "task 5",
     "description": "task 5 desc",
     "status": "DONE",
@@ -16,11 +8,27 @@
     "updatedAt": "2025-10-22T17:22:46.249Z"
   },
   {
+    "title": "task ysp2",
+    "description": "task ysp2 desc",
+    "status": "DONE",
+    "username": "ysp2",
+    "createdAt": "2025-10-22T21:31:10.894Z",
+    "updatedAt": "2025-10-22T21:31:10.894Z"
+  },
+  {
+    "title": "task lagi ysp2",
+    "description": "task lagi ysp2",
+    "status": "TO_DO",
+    "username": "ysp2",
+    "createdAt": "2025-10-22T21:42:09.938Z",
+    "updatedAt": "2025-10-22T21:42:09.938Z"
+  },
+  {
     "title": "task 6",
     "description": "task 6 desc",
-    "status": "TO_DO",
+    "status": "IN_PROGRESS",
     "username": "ysp",
-    "createdAt": "2025-10-22T17:27:41.076Z",
-    "updatedAt": "2025-10-22T17:27:41.076Z"
+    "createdAt": "2025-10-22T22:05:20.700Z",
+    "updatedAt": "2025-10-22T22:05:20.700Z"
   }
 ]

@@ -10,9 +10,9 @@ export class JsonTaskRepository implements TaskRepository {
     return task;
   }
 
-  GetTaskFromDB() {
+  GetTaskFromDB(username: string) {
     console.log("Fetching tasks from DB");
-    return db.getAll();
+    return db.getBy("username", username);
   }
 
   DeleteTaskFromDB(task: Task) {

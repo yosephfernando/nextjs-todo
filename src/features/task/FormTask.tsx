@@ -3,20 +3,22 @@
 import { FC } from "react";
 import { TaskData } from "@/interfaces/task";
 import { Task } from "@/core/domain/task";
+import { UserData } from "@/interfaces/user";
 
 interface FormTaskPropsType {
     onClose: () => void;
     saveTask: (task: TaskData) => void;
+    currentUser: () => UserData | null;
 }
 
-const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask }) => {
+const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser }) => {
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
         const status = formData.get("status") as "TO_DO" | "IN_PROGRESS" | "DONE";
-        const username = formData.get("username") as string;
+        const username = currentUser()?.username || "unknown";
         const createdAt = formData.get("createdAt") as string;
         const updatedAt = formData.get("updatedAt") as string;
 
@@ -43,7 +45,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask }) => {
                             type="text"
                             id="title"
                             name="title"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
@@ -54,7 +56,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask }) => {
                         <textarea
                             id="description"
                             name="description"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
@@ -65,7 +67,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask }) => {
                         <select
                             id="status"
                             name="status"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="TO_DO">TO_DO</option>
                             <option value="IN_PROGRESS">IN_PROGRESS</option>
@@ -73,7 +75,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask }) => {
                         </select>
                     </div>
 
-                    <div>
+                    {/* <div>
                         <label htmlFor="username" className="block text-sm font-medium">
                             Username
                         </label>
@@ -83,7 +85,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask }) => {
                             name="username"
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         />
-                    </div>
+                    </div> */}
 
                     <div>
                         <label htmlFor="createdAt" className="block text-sm font-medium">
@@ -93,7 +95,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask }) => {
                             type="datetime-local"
                             id="createdAt"
                             name="createdAt"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
@@ -105,7 +107,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask }) => {
                             type="datetime-local"
                             id="updatedAt"
                             name="updatedAt"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 

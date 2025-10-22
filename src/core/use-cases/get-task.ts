@@ -3,7 +3,7 @@ import { JsonTaskRepository } from "@/repository/task";
 export class GetTask {
   constructor(private repo: JsonTaskRepository) {}
 
-  execute() {
-    return { task: this.repo.GetTaskFromDB() };
+  execute(username: string) {
+    return { task: this.repo.GetTaskFromDB(username) };
   }
 }

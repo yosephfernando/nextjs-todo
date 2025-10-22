@@ -20,8 +20,8 @@ export async function CreateNewTask(taskData: TaskData) {
     return result.task;
 }
 
-export function FetchAllTasks() {
-    const tasks = new GetTask(repo).execute().task;
+export function FetchAllTasks(username: string) {
+    const tasks = new GetTask(repo).execute(username).task;
     return tasks;
 }
 
