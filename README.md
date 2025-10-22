@@ -67,7 +67,7 @@ flowchart TD
 ## Run test ##
 `npm test`
 
-## Example: Project Module ##
+## Example: Project Module (for future implementation) ##
 ```mermaid
 flowchart TD
     
