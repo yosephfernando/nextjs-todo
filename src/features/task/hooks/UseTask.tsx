@@ -43,6 +43,19 @@ export function useTasks() {
     }
   }
 
+  async function updateTask(task: TaskData, taskToEdit: TaskData) {
+    try {
+      const res = await fetch("/api/tasks", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ task, taskToEdit }),
+      });
+      if (!res.ok) throw new Error("Failed to update task");
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
   async function deleteTask(task: TaskData) {
     try {
       const res = await fetch("/api/tasks", {
@@ -67,5 +80,5 @@ export function useTasks() {
     fetchTasks();
   }, []);
 
-  return { tasks, loading, error, refresh: fetchTasks, newTask: createTask, removeTask: deleteTask };
+  return { tasks, loading, error, refresh: fetchTasks, newTask: createTask, updateTask, removeTask: deleteTask };
 }

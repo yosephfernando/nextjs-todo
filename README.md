@@ -2,9 +2,10 @@
 1. Login / Register user
 2. Create new task
 3. Update status task
-4. Delete task
+4. Filter task by status
+5. Delete task
 
-## Diagram ##
+## Task Management Module ##
 ```mermaid
 flowchart TD
 
@@ -65,3 +66,50 @@ flowchart TD
 
 ## Run test ##
 `npm test`
+
+## Example: Project Module ##
+```mermaid
+flowchart TD
+    
+  subgraph Core
+    subgraph Domain
+      A[Project Entity]
+    end
+
+    subgraph UseCase
+      B[AddProject UseCase]
+      C[GetProject UseCase]
+      D[UpdateProject UseCase]
+      E[DeleteProject UseCase]
+    end
+  end
+
+  subgraph Repository
+    F[JsonProjectRepository]
+  end
+
+  subgraph Service
+    G[ProjectService - includes Create, Fetch, Update, Delete]
+  end
+
+  subgraph API_Frontend
+    H[Next.js API Route /app/api/projects]
+    I[React Component or Page]
+  end
+
+  I --> H
+  H --> G
+  G --> B
+  G --> C
+  G --> D
+  G --> E
+  B --> F
+  C --> F
+  D --> F
+  E --> F
+  B --> A
+  C --> A
+  D --> A
+  E --> A
+
+```

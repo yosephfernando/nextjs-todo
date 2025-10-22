@@ -27,6 +27,16 @@ export class LocalJsonDB<T extends object> {
     fs.writeFileSync(this.dbPath, JSON.stringify(this.data, null, 2));
   }
 
+  edit(oldItem: T, newItem: T): void {
+    const index = this.data.findIndex((d) => JSON.stringify(d) === JSON.stringify(oldItem));
+    if (index === -1) {
+      throw new Error("Item not found");
+    }
+  
+    this.data[index] = newItem;
+    fs.writeFileSync(this.dbPath, JSON.stringify(this.data, null, 2));
+  }
+
   delete(item: T): void {
     const index = this.data.findIndex((d) => JSON.stringify(d) === JSON.stringify(item));
     if (index === -1) {

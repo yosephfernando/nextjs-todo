@@ -1,6 +1,7 @@
 import { TaskData } from "@/interfaces/task";
 import { JsonTaskRepository } from "@/repository/task";
 import { AddTask } from "@/core/use-cases/add-task";
+import { EditTask } from "@/core/use-cases/edit-task";
 import { GetTask } from "@/core/use-cases/get-task";
 import { RemoveTask } from "@/core/use-cases/remove-task";
 import { Task } from "@/core/domain/task";
@@ -17,6 +18,19 @@ export async function CreateNewTask(taskData: TaskData) {
     task.updatedAt = now;
   
     const result = await useCase.execute(task);
+    return result.task;
+}
+
+export async function UpdateTask(taskData: TaskData, taskToEditData: TaskData) {
+    const useCase = new EditTask(repo);
+  
+    const now = new Date().toISOString();
+    const task = new Task(taskData);
+    task.updatedAt = now;
+  
+    const taskToEdit = new Task(taskToEditData);
+  
+    const result = await useCase.execute(task, taskToEdit);
     return result.task;
 }
 

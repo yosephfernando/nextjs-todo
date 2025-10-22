@@ -7,11 +7,12 @@ import { UserData } from "@/interfaces/user";
 
 interface FormTaskPropsType {
     onClose: () => void;
-    saveTask: (task: TaskData) => void;
+    saveTask: (task: TaskData, taskToEdit?: TaskData) => void;
     currentUser: () => UserData | null;
+    taskToEdit: TaskData | null;
 }
 
-const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser }) => {
+const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser, taskToEdit }) => {
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -31,7 +32,11 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser }) => 
             updatedAt,
         });
 
-        saveTask(task.task);
+        if(taskToEdit){
+            saveTask(task.task, taskToEdit);
+        }else{
+            saveTask(task.task);
+        }
     }
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
@@ -45,6 +50,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser }) => 
                             type="text"
                             id="title"
                             name="title"
+                            defaultValue={taskToEdit ? taskToEdit.title : ''}
                             className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -56,6 +62,7 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser }) => 
                         <textarea
                             id="description"
                             name="description"
+                            defaultValue={taskToEdit ? taskToEdit.description : ''}
                             className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -67,25 +74,14 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser }) => 
                         <select
                             id="status"
                             name="status"
+                            defaultValue={taskToEdit ? taskToEdit.status : 'TO_DO'}
                             className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            <option value="TO_DO">TO_DO</option>
-                            <option value="IN_PROGRESS">IN_PROGRESS</option>
-                            <option value="DONE">DONE</option>
+                            <option value="TO_DO">To Do</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="DONE">Done</option>
                         </select>
                     </div>
-
-                    {/* <div>
-                        <label htmlFor="username" className="block text-sm font-medium">
-                            Username
-                        </label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div> */}
 
                     <div>
                         <label htmlFor="createdAt" className="block text-sm font-medium">
@@ -95,6 +91,16 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser }) => 
                             type="datetime-local"
                             id="createdAt"
                             name="createdAt"
+                            defaultValue={
+                                taskToEdit && taskToEdit.createdAt
+                                ? new Date(
+                                    new Date(taskToEdit.createdAt).getTime() -
+                                    new Date(taskToEdit.createdAt).getTimezoneOffset() * 60000
+                                    )
+                                    .toISOString()
+                                    .slice(0, 16)
+                                : ''
+                            }
                             className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -107,6 +113,16 @@ const FormTask: FC<FormTaskPropsType> = ({ onClose, saveTask, currentUser }) => 
                             type="datetime-local"
                             id="updatedAt"
                             name="updatedAt"
+                            defaultValue={
+                                taskToEdit && taskToEdit.updatedAt
+                                ? new Date(
+                                    new Date(taskToEdit.updatedAt).getTime() -
+                                    new Date(taskToEdit.updatedAt).getTimezoneOffset() * 60000
+                                    )
+                                    .toISOString()
+                                    .slice(0, 16)
+                                : ''
+                            }
                             className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
