@@ -5,6 +5,16 @@
 4. Filter task by status
 5. Delete task
 
+## Screen shots ##
+### Login/Register Page
+![Login](./screenshots/login.png)
+![Register](./screenshots/register.png)
+
+### Task Management Page
+![Home](./screenshots/home.png)
+![Home - new task](./screenshots/new-task.png)
+![Home - edit task](./screenshots/edit-task.png)
+
 ## Task Management Module ##
 ```mermaid
 flowchart TD
