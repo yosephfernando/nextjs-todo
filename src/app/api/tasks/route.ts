@@ -9,10 +9,11 @@ export async function POST(request: Request) {
     try {
         const savedTask = CreateNewTask(newTask.task);
         return NextResponse.json(savedTask);
-    } catch(e: any) {
+    } catch(e: unknown) {
+        const message = e instanceof Error ? e.message : String(e);
         return NextResponse.json({
             error: true,
-            message: e.message
+            message
         });
     }
 }
@@ -24,10 +25,11 @@ export async function PUT(request: Request) {
     try {
         const updatedTask = UpdateTask(taskToUpdate.task, taskToEdit.task);
         return NextResponse.json(updatedTask);
-    } catch(e: any) {
+    } catch(e: unknown) {
+        const message = e instanceof Error ? e.message : String(e);
         return NextResponse.json({
             error: true,
-            message: e.message
+            message
         });
     }
 }
@@ -38,10 +40,11 @@ export async function DELETE(request: Request) {
     try {
         DeleteTask(taskToDelete);
         return NextResponse.json({ message: "Task deleted successfully" });
-    } catch(e: any) {
+    } catch(e: unknown) {
+        const message = e instanceof Error ? e.message : String(e);
         return NextResponse.json({
             error: true,
-            message: e.message
+            message
         });
     }
 }

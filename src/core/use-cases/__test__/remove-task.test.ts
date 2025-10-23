@@ -28,7 +28,7 @@ describe("RemoveTask Use Case", () => {
   });
 
   it("should throw error when title missing", () => {
-    expect(() => addTask.execute({ title: "", description: "x" } as any))
+    expect(() => addTask.execute({ title: "", description: "x" } as Task))
       .toThrow("title is required");
   });
 });

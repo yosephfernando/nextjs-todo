@@ -13,10 +13,11 @@ export async function POST(request: Request) {
         const authenticated = await AuthUser(authUser.credentials.username, authUser.credentials.password);
         const authToken = authenticated ? { authToken: "mock-jwt-token-for-" + authUser.credentials.username } : null;
         return NextResponse.json({authenticated, ...authToken});
-    } catch(e: any) {
+    } catch(e: unknown) {
+        const message = e instanceof Error ? e.message : String(e);
         return NextResponse.json({
             error: true,
-            message: e.message
+            message
         });
     }
 }

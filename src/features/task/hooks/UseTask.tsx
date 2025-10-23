@@ -23,8 +23,9 @@ export function useTasks() {
       if (!res.ok) throw new Error("Failed to fetch tasks");
       const data = await res.json();
       setTasks(data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -38,9 +39,10 @@ export function useTasks() {
         body: JSON.stringify(task),
       });
       if (!res.ok) throw new Error("Failed to create task");
-    } catch (err: any) {
-      setError(err.message);
-    }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
+    } 
   }
 
   async function updateTask(task: TaskData, taskToEdit: TaskData) {
@@ -51,9 +53,10 @@ export function useTasks() {
         body: JSON.stringify({ task, taskToEdit }),
       });
       if (!res.ok) throw new Error("Failed to update task");
-    } catch (err: any) {
-      setError(err.message);
-    }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
+    } 
   }
 
   async function deleteTask(task: TaskData) {
@@ -64,9 +67,10 @@ export function useTasks() {
         body: JSON.stringify(task),
       });
       if (!res.ok) throw new Error("Failed to delete task");
-    } catch (err: any) {
-      setError(err.message);
-    }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
+    } 
   }
 
   useEffect(() => {
@@ -78,7 +82,7 @@ export function useTasks() {
       return;
     }
     fetchTasks();
-  }, []);
+  }, [router]);
 
   return { tasks, loading, error, refresh: fetchTasks, newTask: createTask, updateTask, removeTask: deleteTask };
 }

@@ -55,7 +55,7 @@ const FormLogin: FC<FormLoginPropsType> = ({ authUser }) => {
                     />
                 </div>
                 <div className="my-3">
-                    <a href="/auth/register">Don't have account ?</a>
+                    <a href="/auth/register">Don&lsquo;t have account ?</a>
                 </div>
                 <button
                     type="submit"

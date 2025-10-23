@@ -43,8 +43,9 @@ export function useUser() {
         sessionStorage.save("authToken", resBody.authToken);
         router.replace("/");
       }      
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
       setSaved(false);
     }
   }
@@ -63,9 +64,10 @@ export function useUser() {
         setError(resBody.message);
         setSaved(false);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
       setSaved(false);
-      setError(err.message);
     }
   }
 
@@ -93,7 +95,7 @@ export function useUser() {
       router.replace("/");
       return;
     }
-  }, []);
+  }, [router]);
 
   return { authUsers, logout, loading, error, newUser: createUser, saved, currUser: getCurrentUser };
 }

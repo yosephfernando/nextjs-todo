@@ -9,7 +9,7 @@ import { useTasks } from "@/features/task/hooks/UseTask";
 import { useUser } from "@/features/users/hooks/UseUser";
 
 export default function Home() {
-  const { tasks, loading, error, refresh, newTask, updateTask, removeTask } = useTasks();
+  const { tasks, refresh, newTask, updateTask, removeTask } = useTasks();
   const { logout, currUser } = useUser();
   const [ selectedTask, setSelectedTask ] = React.useState<TaskData | null>(null);
   const [ showForm, setShowForm ] = React.useState(false);
@@ -22,6 +22,7 @@ export default function Home() {
     ? userData.username.charAt(0).toUpperCase() + userData.username.slice(1).toLowerCase()
     : "";
     setUser({ username: formattedName });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -34,6 +35,7 @@ export default function Home() {
   const saveTask = (task: TaskData, taskToEdit: TaskData | null = null) => {
     if(taskToEdit){
       updateTask(task, taskToEdit).then(data => {
+        console.log('Task updated:', data);
         setShowForm(false);
         refresh();
       }).catch(err => {
@@ -42,6 +44,7 @@ export default function Home() {
       return;
     }
     newTask(task).then(data => {
+      console.log('Task saved:', data);
       setShowForm(false);
       refresh();
     }).catch(err => {
@@ -78,7 +81,7 @@ export default function Home() {
   return (
     <>
       <h1 className="text-2xl font-bold pl-4 pt-4">
-        <strong>{user?.username ?? ''}</strong>'s task list
+        <strong>{user?.username ?? ''}</strong>&lsquo;s task list
       </h1>
       <div className="flex flex-col md:flex-row gap-4 p-4">
         <div className="flex flex-col md:w-1/3">
